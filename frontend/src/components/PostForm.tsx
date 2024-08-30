@@ -3,13 +3,18 @@ import { useForm, Controller } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import { useQuill } from 'react-quilljs';
+import 'quill/dist/quill.snow.css';
 
 function PostForm({ onSubmit }) {
   const { control, handleSubmit, reset } = useForm();
+  const { quill, quillRef } = useQuill();
 
   const onSubmitForm = (data) => {
-    onSubmit(data.title, data.body, data.author);
+    const body = quill.root.innerHTML;
+    onSubmit(data.title, body, data.author);
     reset();
+    quill.setContents([]);
   };
 
   return (
@@ -31,25 +36,9 @@ function PostForm({ onSubmit }) {
           />
         )}
       />
-      <Controller
-        name="body"
-        control={control}
-        defaultValue=""
-        rules={{ required: 'Body is required' }}
-        render={({ field, fieldState: { error } }) => (
-          <TextField
-            {...field}
-            label="Body"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            multiline
-            rows={4}
-            error={!!error}
-            helperText={error?.message}
-          />
-        )}
-      />
+      <Box sx={{ marginBottom: '1rem' }}>
+        <div ref={quillRef} />
+      </Box>
       <Controller
         name="author"
         control={control}

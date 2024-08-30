@@ -16,9 +16,7 @@ function PostList({ posts }) {
             <Typography color="textSecondary" gutterBottom>
               By {post.author} | {new Date(Number(post.timestamp) / 1000000).toLocaleString()}
             </Typography>
-            <Typography variant="body2" component="p">
-              {post.body}
-            </Typography>
+            <Typography variant="body2" component="div" dangerouslySetInnerHTML={{ __html: post.body }} />
           </CardContent>
         </Card>
       ))}

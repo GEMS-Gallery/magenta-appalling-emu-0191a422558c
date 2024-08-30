@@ -13,7 +13,7 @@ actor {
   type Post = {
     id: Nat;
     title: Text;
-    body: Text;
+    body: Text; // This will now contain HTML content
     author: Text;
     timestamp: Int;
   };
@@ -27,7 +27,7 @@ actor {
     let post : Post = {
       id = nextId;
       title = title;
-      body = body;
+      body = body; // This now contains HTML content
       author = author;
       timestamp = Time.now();
     };
